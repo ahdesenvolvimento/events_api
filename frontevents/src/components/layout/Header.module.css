@@ -1,0 +1,22 @@
+.navbarCustom {
+    background-color: green;
+}
+
+.navbarCustom ul li {
+    margin-right: 15px;
+}
+
+.navbarCustom ul li a{
+    text-decoration: none;
+    color: white;
+}
+
+.navbarCustom ul li a:hover{
+    color: black;
+    transition: .5s;
+}
+
+.btnCustom{
+    background-color: #f1f1;
+}
+

@@ -51,13 +51,14 @@ class Base(models.Model):
         
 class Event(Base):
     id = models.AutoField(primary_key=True)
+    title = models.CharField(max_length=255, null=True, blank=False)
     description = models.TextField()
     start_time = models.TimeField()
     finish_time = models.TimeField()
     city = models.CharField(max_length=255)
     private = models.BooleanField(default=False)
     capacity = models.IntegerField(blank=True, null=True)
-    user_owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    user_owner = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
 
     class Meta:
         db_table = 'event'

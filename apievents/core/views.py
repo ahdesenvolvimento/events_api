@@ -32,15 +32,18 @@ def edit_event(request, pk):
         return JsonResponse(serializer.data, safe=False)
     # return JsonResponse({"events":"events"}, safe=False)
 
-@api_view(['DELETE', 'GET'])
+@api_view(['DELETE'])
 def delete_event(request, pk):
     if request.method == 'DELETE':
         serializer = EventSerializer(Event.objects.filter(id=pk).first())
         Event.objects.filter(id=pk).first().delete()
         return JsonResponse(serializer.data, safe=False)
 
-@api_view(['POST'])
+@api_view(['POST', 'GET'])
 def user(request):
+    if request.method == 'GET':
+        serializer = UserSerializer(User.objects.all(), many=True)
+        return JsonResponse(serializer.data, safe=False)
     if request.method == 'POST':
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
