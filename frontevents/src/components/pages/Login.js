@@ -4,11 +4,11 @@ import SubmitButton from "../form/SubmitButton";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import Form from "../form/Form";
+import { useNavigate } from "react-router-dom";
 export default function Login() {
+  let navigate = useNavigate();
   const [user, setUser] = useState([]);
   const login = (e) => {
-    console.log(localStorage.getItem("access-token"));
-    console.log(localStorage.getItem("refresh-token"));
     e.preventDefault();
     const init = {
       method: "POST",
@@ -20,8 +20,10 @@ export default function Login() {
     fetch("http://localhost:8000/api/token/", init)
       .then((response) => response.json())
       .then((data) => {
+        console.log(data)
         localStorage.setItem("access-token", data.access);
         localStorage.setItem("refresh-token", data.refresh);
+        navigate('/');
       })
       .catch((error) => console.log(error));
   };

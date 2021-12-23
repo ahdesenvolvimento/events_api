@@ -6,19 +6,31 @@
 body,
 html,
 #root {
-  height: 100%;
-  background-color: #f1f1f1;
+  min-height: 100%;
+  /* height: 100%; */
+  background: linear-gradient(to bottom, #f1f1f1, #B1D0E0);
+  /* background-repeat: no-repeat; */
+  /* animation: load; */
 }
 
 .minHeight {
   min-height: calc(100vh - 95px);
+  /* padding-top: 15px; */
+  padding-bottom: 15px; 
   background-color: #fff;
 }
+
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+/* @keyframes load {
+  0% {
+    color: white;
+  }
+} */
 
 /* .teste {
   animation: teste infinite 1s;

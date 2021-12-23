@@ -1,5 +1,5 @@
 .navbarCustom {
-    background-color: green;
+    background-color: #1A374D;
 }
 
 .navbarCustom ul li {
@@ -12,7 +12,7 @@
 }
 
 .navbarCustom ul li a:hover{
-    color: black;
+    color: #B1D0E0;
     transition: .5s;
 }
 

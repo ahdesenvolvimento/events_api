@@ -1,4 +1,18 @@
 .form{
     padding: 125px;
     background-color: #fff;
+    background-image: url("../../img/image.jpg");
+    background-repeat: no-repeat;
+    background-size: 3000px;
+    height: 475px;
+}
+
+
+.content{
+    padding: 15px 2.5% 15px 2.5%;
+}
+
+.content h4{
+    padding: ;
+    font-weight: bold;
 }

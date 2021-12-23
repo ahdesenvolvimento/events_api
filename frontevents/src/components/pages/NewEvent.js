@@ -4,6 +4,7 @@ import Input from "../../components/form/Input";
 import Select from "../../components/form/Select";
 import Form from "../form/Form";
 import SubmitButton from "../form/SubmitButton";
+import styles from "./NewEvent.module.css";
 export default function NewEvent() {
   const [event, setEvent] = useState([]);
   const { id } = useParams();
@@ -40,6 +41,7 @@ export default function NewEvent() {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: "Bearer " + localStorage.getItem("access-token"),
       },
       body: JSON.stringify(event),
     };
@@ -57,6 +59,7 @@ export default function NewEvent() {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
+        Authorization: "Bearer " + localStorage.getItem("access-token"),
       },
       body: JSON.stringify(event),
     };
@@ -77,8 +80,8 @@ export default function NewEvent() {
         type="text"
         id="title"
         name="title"
-        text="Descrição do evento"
-        placeholder="Insira a descrição do evento"
+        text="Título do evento"
+        placeholder="Insira o título do evento"
         handleOnChange={handleChange}
         value={event.title ? event.title : ""}
       />
@@ -89,6 +92,7 @@ export default function NewEvent() {
         text="Descrição do evento"
         placeholder="Insira a descrição do evento"
         handleOnChange={handleChange}
+        className={styles.marginCustom}
         value={event.description ? event.description : ""}
       />
       <div className="row">
@@ -130,7 +134,7 @@ export default function NewEvent() {
         text="Evento privado?"
         options={options}
         handleOnChange={handleChange}
-        value={event.private ? event.private : ""}
+        value={event.private ? "Sim" : "Não"}
       />
       <Input
         type="number"
@@ -142,8 +146,16 @@ export default function NewEvent() {
         value={event.capacity ? event.capacity : ""}
       />
 
-      <SubmitButton text="Criar Evento" />
+      <SubmitButton text={id ? "Editar Evento" : "Criar Evento"} />
     </>
   );
-  return <Form method="POST" handleOnSubmit={ id ? updateEvent : newEvent} content={content} />;
+  return (
+    <div className={styles.content}>
+      <Form
+        method="POST"
+        handleOnSubmit={id ? updateEvent : newEvent}
+        content={content}
+      />
+    </div>
+  );
 }

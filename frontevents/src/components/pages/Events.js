@@ -7,9 +7,10 @@ export default function Events() {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
+        Authorization:"Bearer "+localStorage.getItem('access-token')
       },
     };
-    fetch("http://localhost:8000/events/", init)
+    fetch("http://localhost:8000/events/owner", init)
       .then((response) => response.json())
       .then((data) => {
         setEvents(data);
@@ -19,14 +20,6 @@ export default function Events() {
   }, []);
   return (
     <div>
-      {/* <form action="" method="GET" className={styles.form}>
-        <Input
-          type="search"
-          name="search"
-          placeholder="Busque por um evento"
-          //   handleOnChange={handleChange}
-        />
-      </form> */}
       <div className="row">
         <Event data={events} status="2"/>
 

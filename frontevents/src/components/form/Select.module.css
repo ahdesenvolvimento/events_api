@@ -1,6 +1,8 @@
 .formGroup {
     display: flex;
     flex-direction: column;
+    padding-bottom: 7px;
+    padding-top: 7px;
     /* margin-top: 15px;
     margin-bottom: 15; */
 }
@@ -11,6 +13,7 @@
 }
 
 .formGroup select {
+    background-color: white;
     border: 1px solid #f2f;
     border-radius: 5px;
     height: 35px;

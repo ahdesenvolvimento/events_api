@@ -1,5 +1,6 @@
 // import styles from "./Footer.module.css";
 import { Link } from "react-router-dom";
+import styles from "./Event.module.css";
 export default function Event({ data, status }) {
   console.log(data.lenght);
   function deleteEvent(id) {
@@ -17,22 +18,23 @@ export default function Event({ data, status }) {
     <>
       {status == 1 ? (
         <>
-          {/* {data.lenght == undefined && <p>Sem eventos cadastrados</p>} */}
+          {data.length == 0 && <p>Sem eventos disponíveis</p>}
           {data.map((event) => (
             <div className="col-md-4 mt-3" key={event.id}>
-              <div className="card">
+              <div className={styles.minHeight+" card "+styles.cardCustom}>
                 <h5 className="card-header">{event.title}</h5>
                 <div className="card-body">
-                  <p>{event.description}</p>
-                  <p>Início: {event.start_time}</p>
+                  <p className={styles.description}>{event.description}</p>
+                  {/* <p >Início: {event.start_time}</p>
                   <p>Fim: {event.finish_time}</p>
                   <p>Cidade: {event.city}</p>
-                  <p>Capacidade: {event.capacity}</p>
+                  <p>Capacidade: {event.capacity}</p> */}
                 </div>
                 <div className="card-footer">
-                  <button type="button" className="btn btn-secondary">
+                  <Link to={"/event/"+event.id} className={styles.linkCustom}>Saber mais</Link>
+                  {/* <button type="button" className="btn btn-secondary">
                     Saber mais
-                  </button>
+                  </button> */}
                 </div>
               </div>
             </div>
@@ -40,7 +42,7 @@ export default function Event({ data, status }) {
         </>
       ) : (
         <>
-          {!data && <p>Sem eventos cadastrados</p>}
+           {data.length == 0 && <p>Sem eventos disponíveis</p>}
           <table className="table table-responsive">
             <thead>
               <tr>
@@ -50,6 +52,7 @@ export default function Event({ data, status }) {
                 <th>Fim</th>
                 <th>Cidade</th>
                 <th>Capacidade</th>
+                <th>Privado?</th>
                 <th>Ações</th>
               </tr>
             </thead>
@@ -62,6 +65,7 @@ export default function Event({ data, status }) {
                   <td>{event.finish_time}</td>
                   <td>{event.city}</td>
                   <td>{event.capacity}</td>
+                  <td>{event.private ? 'Sim' : 'Não'}</td>
                   <td>
                     <Link to={"/events/" + event.id}>Editar</Link>
                     <button onClick={(e) => deleteEvent(event.id)}>

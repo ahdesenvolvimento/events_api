@@ -1,6 +1,12 @@
 .footer {
     position: sticky;
-    background-color: blue;
+    background-color: #1A374D;
     height: 55px;
+    color: white;
+    text-align: center;
     bottom: 0;
+}
+
+.footer a{
+    color: white;
 }
