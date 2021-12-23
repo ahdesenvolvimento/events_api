@@ -50,6 +50,11 @@ def events_owner(request):
             user_owner=request.user.id), many=True)
         return JsonResponse(serializer.data, safe=False)
 
+def events_confirmed(request):
+    if request.method == 'GET':
+        serializer = EventSerializer(Event.objects.filter(
+            user_owner=request.user.id), many=True)
+        return JsonResponse(serializer.data, safe=False)
 
 @api_view(['PUT', 'GET'])
 def edit_event(request, pk):

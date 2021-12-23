@@ -21,7 +21,7 @@ export default function Event({ data, status }) {
           {data.length == 0 && <p>Sem eventos disponíveis</p>}
           {data.map((event) => (
             <div className="col-md-4 mt-3" key={event.id}>
-              <div className={styles.minHeight+" card "+styles.cardCustom}>
+              <div className={styles.minHeight + " card " + styles.cardCustom}>
                 <h5 className="card-header">{event.title}</h5>
                 <div className="card-body">
                   <p className={styles.description}>{event.description}</p>
@@ -31,7 +31,9 @@ export default function Event({ data, status }) {
                   <p>Capacidade: {event.capacity}</p> */}
                 </div>
                 <div className="card-footer">
-                  <Link to={"/event/"+event.id} className={styles.linkCustom}>Saber mais</Link>
+                  <Link to={"/event/" + event.id} className={styles.linkCustom}>
+                    Saber mais
+                  </Link>
                   {/* <button type="button" className="btn btn-secondary">
                     Saber mais
                   </button> */}
@@ -42,40 +44,45 @@ export default function Event({ data, status }) {
         </>
       ) : (
         <>
-           {data.length == 0 && <p>Sem eventos disponíveis</p>}
-          <table className="table table-responsive">
-            <thead>
-              <tr>
-                <th>Titulo</th>
-                <th>Descrição</th>
-                <th>Início</th>
-                <th>Fim</th>
-                <th>Cidade</th>
-                <th>Capacidade</th>
-                <th>Privado?</th>
-                <th>Ações</th>
-              </tr>
-            </thead>
-            <tbody>
-              {data.map((event) => (
-                <tr key={event.id}>
-                  <td>{event.title}</td>
-                  <td>{event.description}</td>
-                  <td>{event.start_time}</td>
-                  <td>{event.finish_time}</td>
-                  <td>{event.city}</td>
-                  <td>{event.capacity}</td>
-                  <td>{event.private ? 'Sim' : 'Não'}</td>
-                  <td>
-                    <Link to={"/events/" + event.id}>Editar</Link>
-                    <button onClick={(e) => deleteEvent(event.id)}>
-                      Excluir
-                    </button>
-                  </td>
+          {data.length == 0 && <p>Sem eventos disponíveis</p>}
+          <div className="table-responsive">
+            <table className="table">
+              <thead>
+                <tr>
+                  <th>Titulo</th>
+                  <th>Descrição</th>
+                  <th>Início</th>
+                  <th>Fim</th>
+                  <th>Cidade</th>
+                  <th>Capacidade</th>
+                  <th>Privado?</th>
+                  <th>Ações</th>
                 </tr>
-              ))}{" "}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {data.map((event) => (
+                  <tr key={event.id}>
+                    <td>{event.title}</td>
+                    <td className={styles.descriptionTable}>
+                      {event.description}
+                    </td>
+                    <td>{event.start_time}</td>
+                    <td>{event.finish_time}</td>
+                    <td>{event.city}</td>
+                    <td>{event.capacity}</td>
+                    <td>{event.private ? "Sim" : "Não"}</td>
+                    <td>
+                      <Link to={"/events/" + event.id}>Editar</Link>
+                      <button type="button" onClick={(e) => deleteEvent(event.id)}>
+                        Excluir
+                      </button>
+                      <button type="button">Convidar</button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </>
       )}
     </>

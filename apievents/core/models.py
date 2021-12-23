@@ -70,3 +70,12 @@ class EventUser(Base):
 
     class Meta:
         db_table = 'event_user'
+
+class ConviteEvento(Base):
+    id = models.AutoField(primary_key=True)
+    id_event = models.ForeignKey(Event, on_delete=models.CASCADE)
+    id_user = models.ForeignKey(User, on_delete=models.CASCADE)
+    status = models.BooleanField(default=True)
+
+    class Meta:
+        db_table = "event_invite"

@@ -28,3 +28,10 @@
     color: white;
     transition: .3s;
 }
+
+.descriptionTable{
+    max-width: 15ch;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}

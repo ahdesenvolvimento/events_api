@@ -54,6 +54,9 @@ export default function Header() {
                 <Link to="/login">Entrar</Link>
               </li>
               <li>
+                <Link to="/events/confirmed">Minhas Presenças</Link>
+              </li>
+              <li>
                 <Link to="/" onClick={logout}>
                   Sair
                 </Link>

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
+import styles from "./Event.module.css";
 export default function Event() {
   const { id } = useParams();
   const [event, setEvent] = useState([]);
@@ -15,7 +16,6 @@ export default function Event() {
       .then((response) => response.json())
       .then((data) => {
         setEvent(data[0]);
-        // console.log(event);
       })
       .catch((error) => console.log(error));
   }, []);
@@ -39,10 +39,11 @@ export default function Event() {
       .catch((error) => console.log(error));
   };
   return (
-    <div>
+    <div className={styles.content}>
       <div className="card">
         <h5 className="card-header"> {event.title} </h5>
         <div className="card-body">
+          <p>{event.description}</p>
           {event.description} {event.start_time} {event.finish_time}
           {event.capacity} {event.private}
           <Link to="/" onClick={joinEvent}>
