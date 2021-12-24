@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import delete_event, delete_user, edit_event, events, events_owner, index, join_event, user, LogoutApi
+from .views import delete_event, delete_user, edit_event, events, events_confirmed, events_owner, index, join_event, user, LogoutApi
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 urlpatterns = [
     path('', index, name="index"),
@@ -10,7 +10,8 @@ urlpatterns = [
     path('user/delete/<int:pk>', delete_user, name="delete_user"),
     path('logout/', LogoutApi.as_view(), name="logout"),
     path('events/join/', join_event, name='join_event'),
-    path('events/owner/', events_owner, name="events_onwer")
+    path('events/owner/', events_owner, name="events_onwer"),
+    path('events/confirmed/', events_confirmed, name="events_confirmed"),
 ]
 
 urlpatterns += [

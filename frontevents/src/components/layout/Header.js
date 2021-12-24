@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import styles from "./Header.module.css";
-export default function Header() {
+export default function Header({ token }) {
   const logout = (e) => {
     const init = {
       method: "POST",
@@ -44,23 +44,27 @@ export default function Header() {
               <li>
                 <Link to="/">Início</Link>
               </li>
-              <li>
+              {token ? (<><li>
                 <Link to="/newevent">Criar Evento</Link>
-              </li>
-              <li>
-                <Link to="/events">Meus Eventos</Link>
-              </li>
-              <li>
-                <Link to="/login">Entrar</Link>
-              </li>
-              <li>
-                <Link to="/events/confirmed">Minhas Presenças</Link>
-              </li>
-              <li>
-                <Link to="/" onClick={logout}>
-                  Sair
-                </Link>
-              </li>
+              </li><li>
+                  <Link to="/events">Meus Eventos</Link>
+                </li><li>
+                  <Link to="/events/confirmed">Minhas Presenças</Link>
+                </li>
+                <li>
+                  <Link to="/" onClick={logout}>
+                    Sair
+                  </Link>
+                </li></>) : (
+                <><li>
+                    <Link to="/login">Entrar</Link>
+                  </li><li>
+                      <Link to="/register">Cadastrar</Link>
+                    </li></>)}
+
+
+
+
             </ul>
           </div>
         </nav>

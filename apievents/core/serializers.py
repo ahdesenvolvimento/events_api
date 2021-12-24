@@ -19,7 +19,6 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ('username', 'password', 'first_name', 'last_name', 'email')
 
-
 class EventUserSerializer(serializers.ModelSerializer):
     id_user = UserSerializer()
     id_event = EventSerializer()

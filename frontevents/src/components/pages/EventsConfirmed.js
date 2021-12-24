@@ -10,13 +10,13 @@ export default function EventsConfirmed() {
         Authorization: "Bearer " + localStorage.getItem("access-token"),
       },
     };
-    fetch("http://localhost:8000/events/confimed/", init)
+    fetch("http://localhost:8000/events/confirmed/", init)
       .then((response) => response.json())
       .then((data) => {
-        setEvents(data[0]);
+        setEvents(data);
       })
       .catch((error) => console.log(error));
-  });
+  }, []);
 
   return (
     <div className="row">

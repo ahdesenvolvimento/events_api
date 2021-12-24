@@ -9,26 +9,32 @@ import Register from "./components/pages/Register";
 import Event from "./components/pages/Event";
 import EventsConfirmed from "./components/pages/EventsConfirmed";
 import "./App.css";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 
 function App() {
+  const token = localStorage.getItem('access-token');
   return (
     <div className="app">
-      {/* <h1 className="teste">
-              hte
-            </h1> */}
       <Router>
-        <Header />
+        <Header token={token} />
         <div className="minHeight container">
           <Routes>
             <Route exact path="/" element={<Home />} />
-            <Route path="/newevent" element={<NewEvent />} />
-            <Route path="events/" element={<Events />} />
-            <Route path="/events/:id/" element={<NewEvent />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/event/:id/" element={<Event />} />
-            <Route path="events/confirmed/" element={<EventsConfirmed />} />
+            {token ? (
+              <>
+                <Route path="/newevent" element={<NewEvent />} />
+                <Route path="events/" element={<Events />} />
+                <Route path="/events/:id/" element={<NewEvent />} />
+                <Route path="/event/:id/" element={<Event />} />
+                <Route path="events/confirmed/" element={<EventsConfirmed />} />
+              </>
+            ) : (
+              <>
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
+                <Route path="*" element={<Navigate to="/login" />} />
+              </>
+            )}
           </Routes>
         </div>
         <Footer />

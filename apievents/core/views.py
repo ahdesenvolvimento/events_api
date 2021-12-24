@@ -12,7 +12,8 @@ from rest_framework.decorators import api_view, permission_classes
 
 def index(request):
     if request.method == 'GET':
-        serializer = EventSerializer(Event.objects.filter(title__contains=request.GET.get('search')), many=True)
+        serializer = EventSerializer(Event.objects.filter(
+            title__contains=request.GET.get('search')), many=True)
         return JsonResponse(serializer.data, safe=False)
 
 
@@ -50,14 +51,19 @@ def events_owner(request):
             user_owner=request.user.id), many=True)
         return JsonResponse(serializer.data, safe=False)
 
+
+@permission_classes([IsAuthenticated])
+@api_view(['GET'])
 def events_confirmed(request):
     if request.method == 'GET':
-        serializer = EventSerializer(Event.objects.filter(
-            user_owner=request.user.id), many=True)
+        serializer = EventUserSerializer(EventUser.objects.filter(
+            id_user=request.user.id), many=True)
         return JsonResponse(serializer.data, safe=False)
+
 
 @api_view(['PUT', 'GET'])
 def edit_event(request, pk):
+    print(request.user)
     if request.method == 'GET':
         serializer = EventSerializer(Event.objects.filter(id=pk), many=True)
         return JsonResponse(serializer.data, safe=False)
