@@ -12,16 +12,21 @@ from rest_framework.decorators import api_view, permission_classes
 
 def index(request):
     if request.method == 'GET':
-        serializer = EventSerializer(Event.objects.filter(
-            title__contains=request.GET.get('search')), many=True)
+        search = request.GET.get('search')
+        if search:
+            serializer = EventSerializer(Event.objects.filter(
+                title__contains=request.GET.get('search')), many=True)
+
+        else:
+            serializer = EventSerializer(Event.objects.all(), many=True)
         return JsonResponse(serializer.data, safe=False)
+    return JsonResponse({}, safe=False)
 
 
 @api_view(['POST', 'GET'])
+@permission_classes([IsAuthenticated])
 def events(request):
-    if request.method == 'GET':
-        serializer = EventSerializer(Event.objects.all(), many=True)
-        return JsonResponse(serializer.data, safe=False)
+
     if request.user != 'isAnonymous':
         if request.method == 'POST':
             serializer = EventSerializer(data=request.data)
@@ -38,6 +43,13 @@ def events(request):
                 # serializer.save()
             return JsonResponse(serializer.data, safe=False)
     return JsonResponse({"events": "events"}, safe=False)
+
+
+@api_view(['GET'])
+def events_show(request):
+    if request.method == 'GET':
+        serializer = EventSerializer(Event.objects.all(), many=True)
+        return JsonResponse(serializer.data, safe=False)
 
 
 @permission_classes([IsAuthenticated])
@@ -61,11 +73,14 @@ def events_confirmed(request):
         return JsonResponse(serializer.data, safe=False)
 
 
+@permission_classes([IsAuthenticated])
 @api_view(['PUT', 'GET'])
 def edit_event(request, pk):
-    print(request.user)
     if request.method == 'GET':
+        print(request.user)
         serializer = EventSerializer(Event.objects.filter(id=pk), many=True)
+        serializer.data[0]['total'] = EventUser.objects.filter(id_event=pk).count()
+        # serializer.data[0]['status'] = True if EventUser.objects.filter(id_user=request.user).first() else False
         return JsonResponse(serializer.data, safe=False)
     if str(request.user) != 'AnonymousUser':
         if request.method == 'PUT':
@@ -92,6 +107,8 @@ def user(request):
         serializer = UserSerializer(User.objects.all(), many=True)
         return JsonResponse(serializer.data, safe=False)
     if request.method == 'POST':
+        if User.objects.filter(username=request.data['username']).first():
+            return JsonResponse({"message": "Este usuário já está cadastrado!"}, safe=False)
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -110,11 +127,14 @@ def delete_user(request, pk):
 @permission_classes([IsAuthenticated])
 def join_event(request):
     if request.method == 'POST':
-        event_join = EventUser.objects.create(
-            id_user=request.user, id_event=Event.objects.filter(id=request.data['id']).first())
-        serializer = EventUserSerializer(event_join)
-        print(EventUser.objects.all())
-        return JsonResponse(serializer.data, safe=False)
+        # print(Event.objects.filter(id=request.data['id']).first().capacity)
+        if EventUser.objects.filter(id_event=request.data['id']).count() < Event.objects.filter(id=request.data['id']).first().capacity:
+            event_join = EventUser.objects.create(
+                id_user=request.user, id_event=Event.objects.filter(id=request.data['id']).first())
+            serializer = EventUserSerializer(event_join)
+            return JsonResponse(serializer.data, safe=False)
+        else:
+            return JsonResponse({"message":"O evento atingiu o número máximo de participantes!"}, safe=False)
         # print(request.user , Event.objects.filter(id=request.data['id']).first())
 
 

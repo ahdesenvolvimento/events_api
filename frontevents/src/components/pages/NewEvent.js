@@ -19,9 +19,12 @@ export default function NewEvent() {
       fetch("http://localhost:8000/events/" + id, init)
         .then((response) => response.json())
         .then((data) => {
+          console.log(data)
           setEvent(data[0]);
         })
         .catch((error) => console.log(error));
+    }else{
+      setEvent([])
     }
   }, []);
 
@@ -76,6 +79,7 @@ export default function NewEvent() {
 
   const content = (
     <>
+      <h3 className={styles.title}>{ id ? "Editar Evento " + event.title : "Cadastrar Evento"}</h3>
       <Input
         type="text"
         id="title"
@@ -134,7 +138,7 @@ export default function NewEvent() {
         text="Evento privado?"
         options={options}
         handleOnChange={handleChange}
-        value={event.private ? "Sim" : "Não"}
+        value={event.private ? 1 : 0}
       />
       <Input
         type="number"

@@ -1,8 +1,16 @@
-.content{
+/* .content{
     padding: 35px 5% 35px 5%;
-}
+} */
 
-.marginCustom{
+/* .marginCustom{
     margin-top: 15px;
     margin-bottom: 15px;
+} */
+
+.title {
+    font-weight: bold;
+    text-align: center;
+    margin-top: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid black;
 }

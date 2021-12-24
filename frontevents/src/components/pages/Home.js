@@ -11,10 +11,10 @@ export default function Home() {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: "Bearer " + localStorage.getItem("access-token"),
+        // Authorization: "Bearer " + localStorage.getItem("access-token"),
       },
     };
-    fetch("http://localhost:8000/events/", init)
+    fetch("http://localhost:8000/", init)
       .then((response) => response.json())
       .then((data) => {
         setEvents(data);
@@ -29,7 +29,7 @@ export default function Home() {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: "Bearer " + localStorage.getItem("access-token"),
+        // Authorization: "Bearer " + localStorage.getItem("access-token"),
       },
     };
     fetch("http://localhost:8000/?search=" + search, init)

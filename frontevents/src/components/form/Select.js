@@ -1,5 +1,6 @@
 import styles from "./Select.module.css";
 export default function Input({ text, name, handleOnChange, value, options }) {
+
   return (
     <div className={styles.formGroup}>
       <label htmlFor="">{text}</label>
@@ -10,7 +11,7 @@ export default function Input({ text, name, handleOnChange, value, options }) {
       >
         <option value="">Selecione uma opção</option>
         {options.map((option) => (
-            <option value={option.value} key={option.value}>{option.text}</option>
+        <option value={option.value} selected={value == option.value ? 'selected' : ''} key={option.value}>{option.text}</option>
         ))}
       </select>
     </div>

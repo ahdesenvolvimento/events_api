@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import Event from "../layout/Event";
+import Card from "../layout/Card";
 export default function EventsConfirmed() {
   const [events, setEvents] = useState([]);
   useEffect(() => {
@@ -20,7 +21,8 @@ export default function EventsConfirmed() {
 
   return (
     <div className="row">
-        <Event data={events} status="2"/>
+      <Card />
+        <Event data={events} presence="true" status="2"/>
     </div>
   );
 }

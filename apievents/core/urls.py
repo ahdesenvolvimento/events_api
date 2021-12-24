@@ -1,9 +1,10 @@
 from django.urls import path
-from .views import delete_event, delete_user, edit_event, events, events_confirmed, events_owner, index, join_event, user, LogoutApi
+from .views import delete_event, delete_user, edit_event, events, events_confirmed, events_owner, events_show, index, join_event, user, LogoutApi
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 urlpatterns = [
     path('', index, name="index"),
     path('events/', events, name="events"),
+    # path('events/', events_show, name="events_show"),
     path('events/delete/<int:pk>', delete_event, name="delete"),
     path('events/<int:pk>', edit_event, name="edit_event"),
     path('user/', user, name="user"),

@@ -20,10 +20,11 @@ export default function Login() {
     fetch("http://localhost:8000/api/token/", init)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data)
-        localStorage.setItem("access-token", data.access);
-        localStorage.setItem("refresh-token", data.refresh);
-        navigate('/');
+        data = data.detail ? (alert("Usuário não cadastrado no sistema")) : (
+          localStorage.setItem("access-token", data.access),
+          localStorage.setItem("refresh-token", data.refresh),
+          navigate('/')
+        )
       })
       .catch((error) => console.log(error));
   };
@@ -66,8 +67,7 @@ export default function Login() {
       <div className={styles.layout}>
         <div className={styles.content}>
           <h3 className={styles.title}>Login</h3>
-          <Form method="POST" handleOnSubmit={login} content={content} />
-          {/* <form action="" method="POST" onSubmit={login}></form> */}
+          <Form method="POST" handleOnSubmit={login} content={content} border="none" backgroundColor="#f1f1f1" />
         </div>
       </div>
     </>

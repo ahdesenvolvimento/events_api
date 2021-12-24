@@ -14,13 +14,7 @@
     margin: 0 auto;
 }
 
-.title {
-    font-weight: bold;
-    text-align: center;
-    margin-top: 15px;
-    padding-bottom: 15px;
-    border-bottom: 1px solid black;
-}
+
 
 .row {
     padding: 15px;
@@ -36,3 +30,11 @@
         opacity: 0;
     }
 } */
+
+.title {
+    font-weight: bold;
+    text-align: center;
+    margin-top: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid black;
+}

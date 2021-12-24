@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 import styles from "./Header.module.css";
+import { useNavigate } from "react-router-dom";
 export default function Header({ token }) {
+  let navigate = useNavigate();
   const logout = (e) => {
     const init = {
       method: "POST",
@@ -16,6 +18,7 @@ export default function Header({ token }) {
       .then((response) => {
         localStorage.removeItem("access-token");
         localStorage.removeItem("refresh-token");
+        navigate('/');
       })
       .then((data) => console.log(data))
       .catch((error) => console.log(error));
@@ -57,10 +60,10 @@ export default function Header({ token }) {
                   </Link>
                 </li></>) : (
                 <><li>
-                    <Link to="/login">Entrar</Link>
-                  </li><li>
-                      <Link to="/register">Cadastrar</Link>
-                    </li></>)}
+                  <Link to="/login">Entrar</Link>
+                </li><li>
+                    <Link to="/register">Cadastrar</Link>
+                  </li></>)}
 
 
 

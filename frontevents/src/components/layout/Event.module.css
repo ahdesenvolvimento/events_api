@@ -35,3 +35,9 @@
     text-overflow: ellipsis;
     white-space: nowrap;
 }
+
+.noEvents{
+    font-size:35px;
+    text-align: center;
+    font-weight:bold;
+}
