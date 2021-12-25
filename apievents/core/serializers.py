@@ -1,5 +1,5 @@
 from django.db import models
-from .models import EventUser, User, Event
+from .models import EventUser, User, Event, ConviteEvento
 from rest_framework import serializers
 from rest_framework_simplejwt.tokens import RefreshToken, TokenError
 from django.contrib.auth.hashers import make_password
@@ -19,14 +19,31 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ('username', 'password', 'first_name', 'last_name', 'email')
 
+
 class EventUserSerializer(serializers.ModelSerializer):
     # id_user = UserSerializer()
     id_event = EventSerializer()
+
     class Meta:
         model = EventUser
         # Verificar dps, não mostrar a senha do user no console log e nem no objeto
         # exclude = ('password', )
         fields = ('id_event',)
+
+
+class PersonalUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        # Verificar dps, não mostrar a senha do user no console log e nem no objeto
+        # exclude = ('password', )
+        fields = ('id', 'username', )
+
+
+class ConviteSerializer(serializers.ModelSerializer):
+    id_event = EventSerializer()
+    class Meta:
+        model = ConviteEvento
+        fields = ('id_event', )
 
 
 class LogoutSerializer(serializers.Serializer):

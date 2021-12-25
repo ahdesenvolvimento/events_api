@@ -1,6 +1,5 @@
 import styles from "./Select.module.css";
-export default function Input({ text, name, handleOnChange, value, options }) {
-
+export default function Input({ text, name, handleOnChange, value, options, multiple }) {
   return (
     <div className={styles.formGroup}>
       <label htmlFor="">{text}</label>
@@ -8,6 +7,7 @@ export default function Input({ text, name, handleOnChange, value, options }) {
         id={name}
         name={name}
         onChange={handleOnChange}
+        multiple={multiple}
       >
         <option value="">Selecione uma opção</option>
         {options.map((option) => (

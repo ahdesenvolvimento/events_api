@@ -8,6 +8,7 @@ import Login from "./components/pages/Login";
 import Register from "./components/pages/Register";
 import Event from "./components/pages/Event";
 import EventsConfirmed from "./components/pages/EventsConfirmed";
+import EventsInvite from "./components/pages/EventsInvite";
 import "./App.css";
 
 import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
@@ -28,6 +29,7 @@ function App() {
                 <Route path="/events/:id/" element={<NewEvent />} />
                 <Route path="/event/:id/" element={<Event />} />
                 <Route path="events/confirmed/" element={<EventsConfirmed />} />
+                <Route path="events/invite/:id" element={<EventsInvite />} />
                 <Route path="*" element={<Navigate to="/" />} />
               </>
             ) : (

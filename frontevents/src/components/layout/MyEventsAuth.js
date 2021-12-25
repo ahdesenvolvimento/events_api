@@ -3,7 +3,7 @@ import { faCoffee, faEdit, faShareSquare, faTrash } from '@fortawesome/free-soli
 import { Link } from 'react-router-dom'
 export default function MyEventsAuth({ data, deleteEvent, styles, presence }) {
     var th = [];
-    presence ? (th = [
+    presence === true ? (th = [
         'Titulo',
         'Início',
         'Fim',
@@ -57,9 +57,12 @@ export default function MyEventsAuth({ data, deleteEvent, styles, presence }) {
                                                 <button type="button" className="btn btn-danger" title="Deletar evento" onClick={(e) => deleteEvent(event.id)}>
                                                     <FontAwesomeIcon icon={faTrash} />
                                                 </button>
-                                                <button type="button" className="btn btn-secondary" title="Enviar convites">
-                                                    <FontAwesomeIcon icon={faShareSquare} />
-                                                </button>
+                                                {/* <details> */}
+                                                    <Link to={"/events/invite/"+event.id} className="btn btn-secondary" title="Enviar convites">
+                                                        <FontAwesomeIcon icon={faShareSquare} />
+                                                    </Link>
+                                                {/* </details> */}
+
                                             </>
                                         )}
                                     </td>

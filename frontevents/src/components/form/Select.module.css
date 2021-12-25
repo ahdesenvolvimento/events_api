@@ -16,12 +16,14 @@
     background-color: white;
     border: 1px solid #f2f;
     border-radius: 5px;
-    height: 35px;
+    min-height: 35px;
+    height:auto;
 }
 
 .formGroup select:focus {
     outline: 0;
     height: 35px;
+    height:auto;
     border: 1px solid black;
     transition: all 750ms;
     box-shadow: 0 0 0.25em black;

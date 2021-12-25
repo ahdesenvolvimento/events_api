@@ -1,8 +1,10 @@
 import { Link } from "react-router-dom";
 import styles from "./Header.module.css";
 import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 export default function Header({ token }) {
   let navigate = useNavigate();
+  const [notifications, setNotifications] = useState([]);
   const logout = (e) => {
     const init = {
       method: "POST",
@@ -23,6 +25,24 @@ export default function Header({ token }) {
       .then((data) => console.log(data))
       .catch((error) => console.log(error));
   };
+
+  useEffect(() => {
+    const init = {
+      method: "GET",
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: "Bearer " + localStorage.getItem("access-token")
+      }
+    }
+    fetch("http://localhost:8000/notifications/", init)
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data)
+        setNotifications(data)
+      })
+      .catch((error) => console.log(error));
+  }, []);
+
   return (
     <div className={styles.navbarCustom}>
       <div className="container">
@@ -47,18 +67,37 @@ export default function Header({ token }) {
               <li>
                 <Link to="/">Início</Link>
               </li>
-              {token ? (<><li>
-                <Link to="/newevent">Criar Evento</Link>
-              </li><li>
+              {token ? (<>
+                <li>
+                  <Link to="/newevent">Criar Evento</Link>
+                </li>
+                <li>
                   <Link to="/events">Meus Eventos</Link>
-                </li><li>
+                </li>
+                <li>
                   <Link to="/events/confirmed">Minhas Presenças</Link>
                 </li>
                 <li>
                   <Link to="/" onClick={logout}>
                     Sair
                   </Link>
-                </li></>) : (
+                </li>
+                <div className="dropdown">
+                  <li className="">
+                    <a href="/#" className="dropdown-toggle" data-bs-toggle="dropdown">
+                      Notificações <span className="badge badge-dark">{notifications.length}</span>
+                    </a>
+                    <div className="dropdown-menu">
+                      {notifications.map(notification => (
+                        <li className="dropdown-item">
+                          12312321
+                        </li>
+                      ))}
+
+                    </div>
+                  </li>
+                </div>
+              </>) : (
                 <><li>
                   <Link to="/login">Entrar</Link>
                 </li><li>

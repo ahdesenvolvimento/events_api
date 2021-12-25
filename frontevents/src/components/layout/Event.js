@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import styles from "./Event.module.css";
 
 import MyEventsAuth from "./MyEventsAuth";
-export default function Event({ data, status, presence }) {
+export default function Event({ data, status}) {
   console.log(data.lenght);
   function deleteEvent(id) {
     const init = {
@@ -39,7 +39,7 @@ export default function Event({ data, status, presence }) {
         </>
       ) : (
         <>
-          <MyEventsAuth data={data} deleteEvent={deleteEvent} presence="true" styles={styles}/>
+          <MyEventsAuth data={data} deleteEvent={deleteEvent} styles={styles}/>
         </>
       )}
     </>
