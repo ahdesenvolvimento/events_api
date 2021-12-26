@@ -15,7 +15,6 @@ export default function Events() {
       .then((response) => response.json())
       .then((data) => {
         setEvents(data);
-        console.log(data);
       })
       .catch((error) => console.log(error));
   }, []);
