@@ -8,8 +8,12 @@ from django.contrib.auth.hashers import make_password
 class EventSerializer(serializers.ModelSerializer):
     class Meta:
         model = Event
-        fields = '__all__'
+        fields = ('title', 'description', 'city', 'private', 'capacity', 'start_time', 'finish_time', 'id', )
 
+class EventPresenceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Event
+        fields = ('title', 'description', 'city', 'start_time', 'finish_time', 'id', )
 
 class UserSerializer(serializers.ModelSerializer):
     def validate_password(self, value: str):

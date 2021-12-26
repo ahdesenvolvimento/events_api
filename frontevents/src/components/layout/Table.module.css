@@ -1,0 +1,7 @@
+
+.descriptionTable{
+    max-width: 15ch;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}

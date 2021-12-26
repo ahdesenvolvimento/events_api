@@ -1,6 +1,6 @@
 from django.http.response import JsonResponse
 from django.shortcuts import render
-from .serializers import EventSerializer, EventUserSerializer, LogoutSerializer, UserSerializer, PersonalUserSerializer, ConviteSerializer
+from .serializers import EventSerializer, EventUserSerializer, LogoutSerializer, UserSerializer, PersonalUserSerializer, ConviteSerializer, EventPresenceSerializer
 from .models import Event, EventUser, User, ConviteEvento
 from django.db.models import F
 from rest_framework.permissions import IsAuthenticated
@@ -68,6 +68,10 @@ def events_owner(request):
 @api_view(['GET'])
 def events_confirmed(request):
     if request.method == 'GET':
+        eventos = EventUser.objects.filter(
+            id_user=request.user.id).values('id_event')
+        # print(eventos)
+        # serializer = EventPresenceSerializer(Event.objects.filter(id__in=eventos), many=True)
         serializer = EventUserSerializer(EventUser.objects.filter(
             id_user=request.user.id), many=True)
         return JsonResponse(serializer.data, safe=False)
@@ -98,7 +102,8 @@ def edit_event(request, pk):
 def delete_event(request, pk):
     if request.method == 'DELETE':
         Event.objects.filter(id=pk).first().delete()
-        serializer = EventSerializer(Event.objects.filter(user_owner=request.user), many=True)
+        serializer = EventSerializer(Event.objects.filter(
+            user_owner=request.user), many=True)
         return JsonResponse(serializer.data, safe=False)
 
 
@@ -173,9 +178,9 @@ def events_invite(request):
 @permission_classes([IsAuthenticated])
 def sign_out(request, pk):
     if request.method == 'DELETE':
-        serializer = EventUserSerializer(
-            EventUser.objects.filter(id_event=pk).first())
         EventUser.objects.filter(id_event=pk).first().delete()
+        serializer = EventUserSerializer(
+            EventUser.objects.filter(id_user=request.user), many=True)
         return JsonResponse(serializer.data, safe=False)
 
 

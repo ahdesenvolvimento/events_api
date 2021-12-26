@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Event from "../layout/Event";
 import Card from "../layout/Card";
+import Button from "../layout/Button";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCoffee, faEdit, faShareSquare, faTrash } from '@fortawesome/free-solid-svg-icons';
 import styles from "./EventsConfirmed.module.css";
@@ -41,7 +42,7 @@ export default function EventsConfirmed() {
   }
   const content = (
 
-    events.length == 0 ? <p className={styles.noEvents}>Você não tem nenhum evento cadastrado, clique <Link to="/newevent">aqui</Link> para criar um novo evento</p> : (
+    events.length == 0 ? <p className={'alert alert-danger'}>Você não possui nenhuma presença confirmada, clique <Link to="/">aqui</Link> para visualizar os eventos disponíveis.</p> : (
       <div className="table-responsive">
         <table className="table">
           <thead>
@@ -73,9 +74,7 @@ export default function EventsConfirmed() {
                 <td>{event.id_event.finish_time}</td>
                 <td>{event.id_event.city}</td>
                 <td>
-                  <button type="button" className="btn btn-secondary" onClick={(e) => removePresence(event.id_event.id)} title="Remover presença ">
-                    <FontAwesomeIcon icon={faShareSquare} /> Remover presença
-                  </button>
+                  <Button icone={<FontAwesomeIcon icon={faShareSquare} />} text="Remover presença" type="button" className="btn btn-secondary" handleOnClick={(e) => removePresence(event.id_event.id)} title="Remover presença " />
                 </td>
               </tr>
             ))}
@@ -87,7 +86,7 @@ export default function EventsConfirmed() {
   )
   return (
     <div className="row">
-      <Card content={content} />
+      <Card content={content} styles={styles.minHeight} />
 
     </div>
   );
