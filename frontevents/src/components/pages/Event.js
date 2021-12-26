@@ -30,6 +30,7 @@ export default function Event() {
       },
       body: JSON.stringify({
         id: id,
+        status:false
       }),
     };
 

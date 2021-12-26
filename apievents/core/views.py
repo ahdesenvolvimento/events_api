@@ -138,9 +138,14 @@ def delete_user(request, pk):
 @api_view(['POST', 'GET'])
 @permission_classes([IsAuthenticated])
 def join_event(request):
+
     if request.method == 'POST':
         # print(Event.objects.filter(id=request.data['id']).first().capacity)
         if EventUser.objects.filter(id_event=request.data['id']).count() < Event.objects.filter(id=request.data['id']).first().capacity:
+            if request.data['status']:
+                ConviteEvento.objects.filter(
+                    id_event=request.data['id']).update(status=False)
+                print("entrei")
             event_join = EventUser.objects.create(
                 id_user=request.user, id_event=Event.objects.filter(id=request.data['id']).first())
             serializer = EventUserSerializer(event_join)
@@ -158,10 +163,9 @@ def events_invite(request):
         for i in request.data['invitations']:
             user = User.objects.filter(id=i).first()
             ConviteEvento.objects.create(id_user=user, id_event=event)
-        
+
         print(ConviteEvento.objects.all())
-        return JsonResponse({"message":"Os usuários foram convidados para o seu evento!"}, safe=False)
-        
+        return JsonResponse({"message": "Os usuários foram convidados para o seu evento!"}, safe=False)
 
 
 # Verificar essa função depois
@@ -174,12 +178,15 @@ def sign_out(request, pk):
         EventUser.objects.filter(id_event=pk).first().delete()
         return JsonResponse(serializer.data, safe=False)
 
+
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def notifications(request):
     if request.method == 'GET':
-        serializer = ConviteSerializer(ConviteEvento.objects.filter(id_user=request.user, status=True), many=True)
+        serializer = ConviteSerializer(ConviteEvento.objects.filter(
+            id_user=request.user, status=True), many=True)
         return JsonResponse(serializer.data, safe=False)
+
 
 class LogoutApi(generics.GenericAPIView):
     serializer_class = LogoutSerializer

@@ -43,6 +43,28 @@ export default function Header({ token }) {
       .catch((error) => console.log(error));
   }, []);
 
+  const joinEvent = (e, id_not) => {
+    e.preventDefault();
+    const init = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + localStorage.getItem("access-token"),
+      },
+      body: JSON.stringify({
+        id: id_not,
+        status: true
+      }),
+    };
+
+    fetch("http://localhost:8000/events/join/", init)
+      .then((response) => response.json())
+      .then((data) => {
+        data = data.message ? alert(data.message) : ''
+      })
+      .catch((error) => console.log(error));
+  };
+
   return (
     <div className={styles.navbarCustom}>
       <div className="container">
@@ -77,36 +99,33 @@ export default function Header({ token }) {
                 <li>
                   <Link to="/events/confirmed">Minhas Presenças</Link>
                 </li>
-                <li>
-                  <Link to="/" onClick={logout}>
-                    Sair
-                  </Link>
-                </li>
                 <div className="dropdown">
                   <li className="">
                     <a href="/#" className="dropdown-toggle" data-bs-toggle="dropdown">
                       Notificações <span className="badge badge-dark">{notifications.length}</span>
                     </a>
                     <div className="dropdown-menu">
+                      {notifications.length === 0 && <p>Sem notificações no momento.</p>}
                       {notifications.map(notification => (
-                        <li className="dropdown-item">
-                          12312321
+                        <li className="dropdown-item" key={notification.id} onClick={(e) => joinEvent(e, notification.id_event.id)}>
+                          {notification.id_event.title}
                         </li>
                       ))}
-
                     </div>
                   </li>
                 </div>
+                <li>
+                  <Link to="/" onClick={logout}>
+                    Sair
+                  </Link>
+                </li>
+
               </>) : (
                 <><li>
                   <Link to="/login">Entrar</Link>
                 </li><li>
                     <Link to="/register">Cadastrar</Link>
                   </li></>)}
-
-
-
-
             </ul>
           </div>
         </nav>
