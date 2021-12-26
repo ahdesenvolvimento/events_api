@@ -190,6 +190,7 @@ def notifications(request):
     if request.method == 'GET':
         serializer = ConviteSerializer(ConviteEvento.objects.filter(
             id_user=request.user, status=True), many=True)
+        print(serializer)
         return JsonResponse(serializer.data, safe=False)
 
 

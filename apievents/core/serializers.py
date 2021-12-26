@@ -32,7 +32,7 @@ class EventUserSerializer(serializers.ModelSerializer):
         model = EventUser
         # Verificar dps, não mostrar a senha do user no console log e nem no objeto
         # exclude = ('password', )
-        fields = ('id_event',)
+        fields = ('id_event', 'id')
 
 
 class PersonalUserSerializer(serializers.ModelSerializer):
@@ -47,7 +47,7 @@ class ConviteSerializer(serializers.ModelSerializer):
     id_event = EventSerializer()
     class Meta:
         model = ConviteEvento
-        fields = ('id_event', )
+        fields = ('id_event', 'id')
 
 
 class LogoutSerializer(serializers.Serializer):

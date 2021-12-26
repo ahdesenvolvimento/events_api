@@ -65,7 +65,7 @@ export default function EventsConfirmed() {
           </thead>
           <tbody>
             {events.map((event) => (
-              <tr key={event.id_event.id}>
+              <tr key={event.id}>
                 <td>{event.id_event.title}</td>
                 <td className={styles.descriptionTable}>
                   {event.id_event.description}

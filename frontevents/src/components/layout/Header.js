@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import styles from "./Header.module.css";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+import Button from "../layout/Button";
 export default function Header({ token }) {
   let navigate = useNavigate();
   const [notifications, setNotifications] = useState([]);
@@ -25,10 +26,6 @@ export default function Header({ token }) {
       .then((data) => console.log(data))
       .catch((error) => console.log(error));
   };
-
-  const getNotifications = (e) => {
-
-  }
   useEffect(() => {
     // if (token) {
     // getNotifications();
@@ -50,6 +47,7 @@ export default function Header({ token }) {
 
 
   const joinEvent = (e, id_not) => {
+    console.log(notifications)
     e.preventDefault();
     const init = {
       method: "POST",
@@ -79,14 +77,15 @@ export default function Header({ token }) {
             styles.navbarCustom + " navbar navbar-expand-lg navbar-light"
           }
         >
-          <button
+          <Button
             className={styles.btnCustom + " navbar-toggler btn"}
             type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#collapseNavbar"
-          >
-            <span className="navbar-toggler-icon"></span>
-          </button>
+            dataToggle="collapse"
+            dataTarget="#collapseNavbar"
+            title="Navbar"
+            text={<span className="navbar-toggler-icon"></span>}
+
+          />
           <div
             className="collapse navbar-collapse justify-content-end"
             id="collapseNavbar"
@@ -105,21 +104,21 @@ export default function Header({ token }) {
                 <li>
                   <Link to="/events/confirmed">Minhas Presenças</Link>
                 </li>
-                <div className="dropdown">
-                  <li className="">
-                    <a href="/#" className="dropdown-toggle" data-bs-toggle="dropdown">
-                      Notificações <span className="badge badge-dark">{notifications.length}</span>
-                    </a>
-                    <div className="dropdown-menu">
-                      {notifications.length === 0 && <p>Sem notificações no momento.</p>}
-                      {notifications.map(notification => (
-                        <li className="dropdown-item" key={notification.id} onClick={(e) => joinEvent(e, notification.id_event.id)}>
-                          {notification.id_event.title}
-                        </li>
-                      ))}
-                    </div>
-                  </li>
-                </div>
+                <li className="dropdown">
+                  <a href="/#" className="dropdown-toggle" data-bs-toggle="dropdown">
+                    Notificações <span className="badge badge-dark">{notifications.length}</span>
+                  </a>
+                  <div className="dropdown-menu">
+                    {notifications.length === 0 && <p>Sem notificações no momento.</p>}
+                    {notifications.map(notification => (
+                      <a className="dropdown-item" style={{color: 'black', cursor: 'pointer'}} key={notification.id} onClick={(e) => joinEvent(e, notification.id_event.id)}>
+                        Você foi convidado para o evento: 
+                        <br/>
+                        {notification.id_event.title}
+                      </a>
+                    ))}
+                  </div>
+                </li>
                 <li>
                   <Link to="/" onClick={logout}>
                     Sair
