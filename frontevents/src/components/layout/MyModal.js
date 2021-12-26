@@ -7,7 +7,7 @@ export default function MyModal({ show, handleClose, message, icon }) {
                 <Modal.Header closeButton>
                     <Modal.Title>Ops!!!</Modal.Title>
                 </Modal.Header>
-                <Modal.Body style={{fontWeight: 'bold'}}>{message} <FontAwesomeIcon icon={icon} /></Modal.Body>
+                <Modal.Body style={{ fontWeight: 'bold' }}>{message} {icon ? (<><FontAwesomeIcon icon={icon} /></>) : ''}</Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>
                         Fechar

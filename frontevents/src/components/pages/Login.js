@@ -5,9 +5,18 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import Form from "../form/Form";
 import { useNavigate } from "react-router-dom";
+import MyModal from "../layout/MyModal";
+import { faGrinBeamSweat } from '@fortawesome/free-solid-svg-icons'
 export default function Login() {
   let navigate = useNavigate();
   const [user, setUser] = useState([]);
+  const [show, setShow] = useState(false);
+  const [message, setMessage] = useState();
+  const handleClose = () => setShow(false);
+  const handleShow = (message) => { 
+    setMessage(message);
+    setShow(true);
+  }
   const login = (e) => {
     e.preventDefault();
     const init = {
@@ -20,7 +29,7 @@ export default function Login() {
     fetch("http://localhost:8000/api/token/", init)
       .then((response) => response.json())
       .then((data) => {
-        data = data.detail ? (alert("Usuário não cadastrado no sistema")) : (
+        data = data.detail ? (handleShow("Usuário não cadastrado no sistema!")) : (
           localStorage.setItem("access-token", data.access),
           localStorage.setItem("refresh-token", data.refresh),
           navigate('/')
@@ -42,6 +51,7 @@ export default function Login() {
           placeholder="Insira seu usuário"
           text="Usuário"
           handleOnChange={handleChange}
+          required={true}
         />
       </div>
       <div className={styles.row}>
@@ -51,6 +61,7 @@ export default function Login() {
           placeholder="Insira sua senha"
           text="Senha"
           handleOnChange={handleChange}
+          required={true}
         />
       </div>
       <div className={styles.row}>
@@ -70,6 +81,7 @@ export default function Login() {
           <Form method="POST" handleOnSubmit={login} content={content} border="none" backgroundColor="#f1f1f1" />
         </div>
       </div>
+      <MyModal message={message} show={show} handleClose={handleClose} icon={faGrinBeamSweat}/>
     </>
   );
 }

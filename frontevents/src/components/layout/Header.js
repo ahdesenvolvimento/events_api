@@ -26,7 +26,12 @@ export default function Header({ token }) {
       .catch((error) => console.log(error));
   };
 
-  const getNotifications = () => {
+  const getNotifications = (e) => {
+
+  }
+  useEffect(() => {
+    // if (token) {
+    // getNotifications();
     const init = {
       method: "GET",
       headers: {
@@ -40,11 +45,7 @@ export default function Header({ token }) {
         setNotifications(data)
       })
       .catch((error) => console.log(error));
-  }
-  useEffect(() => {
-    if (token) {
-      getNotifications();
-    }
+    // }
   }, []);
 
 
