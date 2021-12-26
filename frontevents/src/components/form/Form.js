@@ -4,11 +4,12 @@ export default function Form({
   handleOnSubmit,
   content,
   backgroundColor,
-  border
+  border,
+  styles
 }) {
   return (
     <>
-      <form action="" method={method} onSubmit={handleOnSubmit}>
+      <form action="" className={styles ? styles.form : ''} method={method} onSubmit={handleOnSubmit}>
         <Card content={content} backgroundColor={backgroundColor} border={border}/>
       </form>
     </>
