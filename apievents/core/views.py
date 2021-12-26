@@ -29,21 +29,22 @@ def index(request):
 @permission_classes([IsAuthenticated])
 def events(request):
 
-    if request.user != 'isAnonymous':
-        if request.method == 'POST':
-            serializer = EventSerializer(data=request.data)
-            if serializer.is_valid():
-                event = Event.objects.create(
-                    description=request.data['description'],
-                    start_time=request.data['start_time'],
-                    finish_time=request.data['finish_time'],
-                    city=request.data['city'],
-                    title=request.data['title'],
-                    capacity=request.data['capacity'],
-                    user_owner=request.user
-                )
-                # serializer.save()
-            return JsonResponse(serializer.data, safe=False)
+    # if request.user != 'isAnonymous':
+    if request.method == 'POST':
+        serializer = EventSerializer(data=request.data)
+        if serializer.is_valid():
+            event = Event.objects.create(
+                description=request.data['description'],
+                start_time=request.data['start_time'],
+                finish_time=request.data['finish_time'],
+                city=request.data['city'],
+                title=request.data['title'],
+                capacity=request.data['capacity'],
+                user_owner=request.user
+            )
+            print(Event.objects.filter(user_owner=request.user))
+            print('ops')
+        return JsonResponse(serializer.data, safe=False)
     return JsonResponse({"events": "events"}, safe=False)
 
 

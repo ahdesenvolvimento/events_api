@@ -2,33 +2,22 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEdit, faShareSquare, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { Link } from 'react-router-dom'
 import Button from '../layout/Button';
-export default function MyEventsAuth({ data, deleteEvent, styles, presence }) {
-    var th = [];
-    presence === true ? (th = [
-        'Titulo',
-        'Início',
-        'Fim',
-        'Ações']) : (th = [
-            'Titulo',
-            'Descrição',
-            'Início',
-            'Fim',
-            'Cidade',
-            'Capacidade',
-            'Privado?',
-            'Ações'
-        ])
-
+export default function MyEventsAuth({ data, deleteEvent, styles }) {
     return (
         <>
-            {data.length == 0 ? <p className={"alert alert-danger"}>Você não tem nenhum evento cadastrado, clique <Link to="/newevent">aqui</Link> para criar um novo evento</p> : (
+        {data.length == 0 ? <p className={"alert alert-danger"}>Você não tem nenhum evento cadastrado, clique <Link to="/newevent">aqui</Link> para criar um novo evento</p> : (
                 <div className="table-responsive">
                     <table className="table">
                         <thead>
                             <tr>
-                                {th.map((header) => (
-                                    <th>{header}</th>
-                                ))}
+                                <th>Titulo</th>
+                                <th>Descrição</th>
+                                <th>Início</th>
+                                <th>Fim</th>
+                                <th>Cidade</th>
+                                <th>Capacidade</th>
+                                <th>Privado?</th>
+                                <th>Ações</th>
                             </tr>
                         </thead>
                         <tbody>

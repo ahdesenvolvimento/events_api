@@ -5,9 +5,17 @@ import Select from "../../components/form/Select";
 import Form from "../form/Form";
 import SubmitButton from "../form/SubmitButton";
 import styles from "./NewEvent.module.css";
+import MyModal from "../../components/layout/MyModal";
 export default function NewEvent() {
   const [event, setEvent] = useState([]);
   const { id } = useParams();
+  const [show, setShow] = useState(false)
+  const [message, setMessage] = useState();
+  const handleShow = (message) => {
+    setMessage(message);
+    setShow(true)
+  }
+  const handleClose = () => setShow(false);
   useEffect(() => {
     if (id) {
       const init = {
@@ -19,11 +27,11 @@ export default function NewEvent() {
       fetch("http://localhost:8000/events/" + id, init)
         .then((response) => response.json())
         .then((data) => {
-          console.log(data)
+          
           setEvent(data[0]);
         })
         .catch((error) => console.log(error));
-    }else{
+    } else {
       setEvent([])
     }
   }, []);
@@ -51,7 +59,8 @@ export default function NewEvent() {
     fetch("http://localhost:8000/events/", init)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
+        handleShow('Evento cadastrado com sucesso!')
+        setEvent([])
       })
       .catch((error) => console.log(error));
   };
@@ -69,7 +78,7 @@ export default function NewEvent() {
     fetch("http://localhost:8000/events/" + id, init)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
+        handleShow('Evento editado com sucesso!')
       })
       .catch((error) => console.log(error));
   };
@@ -79,7 +88,7 @@ export default function NewEvent() {
 
   const content = (
     <>
-      <h3 className={styles.title}>{ id ? "Editar Evento " + event.title : "Cadastrar Evento"}</h3>
+      <h3 className={styles.title}>{id ? "Editar Evento " + event.title : "Cadastrar Evento"}</h3>
       <Input
         type="text"
         id="title"
@@ -88,6 +97,7 @@ export default function NewEvent() {
         placeholder="Insira o título do evento"
         handleOnChange={handleChange}
         value={event.title ? event.title : ""}
+        required={true}
       />
       <Input
         type="text"
@@ -98,6 +108,7 @@ export default function NewEvent() {
         handleOnChange={handleChange}
         className={styles.marginCustom}
         value={event.description ? event.description : ""}
+        required={true}
       />
       <div className="row">
         <div className="col-6">
@@ -108,6 +119,7 @@ export default function NewEvent() {
             text="Hora de início"
             handleOnChange={handleChange}
             value={event.start_time ? event.start_time : ""}
+            required={true}
           />
         </div>
         <div className="col-6">
@@ -118,6 +130,7 @@ export default function NewEvent() {
             text="Hora do término"
             handleOnChange={handleChange}
             value={event.finish_time ? event.finish_time : ""}
+            required={true}
           />
         </div>
       </div>
@@ -130,6 +143,7 @@ export default function NewEvent() {
         placeholder="Insira a descrição do evento"
         handleOnChange={handleChange}
         value={event.city ? event.city : ""}
+        required={true}
       />
 
       <Select
@@ -160,6 +174,7 @@ export default function NewEvent() {
         handleOnSubmit={id ? updateEvent : newEvent}
         content={content}
       />
+      <MyModal message={message} show={show} handleClose={handleClose} />
     </div>
   );
 }
