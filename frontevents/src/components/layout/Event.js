@@ -1,19 +1,21 @@
 // import styles from "./Footer.module.css";
 import { Link } from "react-router-dom";
 import styles from "./Event.module.css";
+import { useState } from "react";
 
 import MyEventsAuth from "./MyEventsAuth";
-export default function Event({ data, status}) {
-  console.log(data.lenght);
+export default function Event({ data, status }) {
   function deleteEvent(id) {
     const init = {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
+        Authorization: "Bearer " + localStorage.getItem("access-token")
       },
     };
     fetch("http://localhost:8000/events/delete/" + id, init)
-      .then()
+      .then((response) => response.json()).then((data) => {
+      })
       .catch((error) => console.log(error));
   }
   return (
@@ -39,7 +41,7 @@ export default function Event({ data, status}) {
         </>
       ) : (
         <>
-          <MyEventsAuth data={data} deleteEvent={deleteEvent} styles={styles}/>
+          <MyEventsAuth data={data} deleteEvent={deleteEvent} styles={styles} />
         </>
       )}
     </>

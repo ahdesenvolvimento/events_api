@@ -97,8 +97,8 @@ def edit_event(request, pk):
 @api_view(['DELETE'])
 def delete_event(request, pk):
     if request.method == 'DELETE':
-        serializer = EventSerializer(Event.objects.filter(id=pk).first())
         Event.objects.filter(id=pk).first().delete()
+        serializer = EventSerializer(Event.objects.filter(user_owner=request.user), many=True)
         return JsonResponse(serializer.data, safe=False)
 
 

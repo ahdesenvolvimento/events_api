@@ -26,7 +26,7 @@ export default function Header({ token }) {
       .catch((error) => console.log(error));
   };
 
-  useEffect(() => {
+  const getNotifications = () => {
     const init = {
       method: "GET",
       headers: {
@@ -37,11 +37,16 @@ export default function Header({ token }) {
     fetch("http://localhost:8000/notifications/", init)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data)
         setNotifications(data)
       })
       .catch((error) => console.log(error));
+  }
+  useEffect(() => {
+    if (token) {
+      getNotifications();
+    }
   }, []);
+
 
   const joinEvent = (e, id_not) => {
     e.preventDefault();

@@ -6,6 +6,7 @@ export default function Input({
   handleOnChange,
   value,
   placeholder,
+  required
 }) {
   return (
     <div className={styles.formGroup}>
@@ -17,6 +18,7 @@ export default function Input({
         onChange={handleOnChange}
         placeholder={placeholder}
         value={value}
+        required={required}
       />
     </div>
   );
