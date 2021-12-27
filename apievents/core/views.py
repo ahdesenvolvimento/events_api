@@ -146,16 +146,15 @@ def delete_user(request, pk):
 def join_event(request):
 
     if request.method == 'POST':
-        # print(Event.objects.filter(id=request.data['id']).first().capacity)
         if EventUser.objects.filter(id_event=request.data['id']).count() < Event.objects.filter(id=request.data['id']).first().capacity:
             if request.data['status']:
                 ConviteEvento.objects.filter(
                     id_event=request.data['id']).update(status=False)
-                print("entrei")
             event_join = EventUser.objects.create(
                 id_user=request.user, id_event=Event.objects.filter(id=request.data['id']).first())
             serializer = EventUserSerializer(event_join)
-            return JsonResponse(serializer.data, safe=False)
+            message = "Presença confirmada! Não esqueça da mascara e das recomendações dos orgãos de saúde."
+            return JsonResponse({"message": message}, safe=False)
         else:
             return JsonResponse({"message": "O evento atingiu o número máximo de participantes!"}, safe=False)
         # print(request.user , Event.objects.filter(id=request.data['id']).first())
@@ -191,8 +190,20 @@ def notifications(request):
     if request.method == 'GET':
         serializer = ConviteSerializer(ConviteEvento.objects.filter(
             id_user=request.user, status=True), many=True)
-        print(serializer)
         return JsonResponse(serializer.data, safe=False)
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def events_data(request, pk):
+    if request.method == 'GET':
+        if Event.objects.filter(user_owner=request.user, id=pk).exists():
+            return JsonResponse({"owner": True}, safe=False)
+        else:
+            if EventUser.objects.filter(id_user=request.user, id_event=pk).exists():
+                return JsonResponse({"owner": True}, safe=False)
+            else:
+                return JsonResponse({"owner": False}, safe=False)
 
 
 class LogoutApi(generics.GenericAPIView):
