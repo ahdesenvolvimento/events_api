@@ -3,7 +3,7 @@ import styles from "./Header.module.css";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Button from "../layout/Button";
-export default function Header({ token }) {
+export default function Header({ token, setStatusNav, statusNav }) {
   let navigate = useNavigate();
   const [notifications, setNotifications] = useState([]);
   const logout = (e) => {
@@ -21,12 +21,15 @@ export default function Header({ token }) {
       .then((response) => {
         localStorage.removeItem("access-token");
         localStorage.removeItem("refresh-token");
+        setStatusNav(false);
         navigate('/');
       })
       .then((data) => console.log(data))
       .catch((error) => console.log(error));
   };
   useEffect(() => {
+    console.log(token)
+    token ? setStatusNav(true) : setStatusNav(false);
     // if (token) {
     // getNotifications();
     const init = {
@@ -94,7 +97,7 @@ export default function Header({ token }) {
               <li>
                 <Link to="/">Início</Link>
               </li>
-              {token ? (<>
+              {statusNav ? (<>
                 <li>
                   <Link to="/newevent">Criar Evento</Link>
                 </li>
