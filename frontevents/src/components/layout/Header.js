@@ -28,7 +28,6 @@ export default function Header({ token, setStatusNav, statusNav }) {
       .catch((error) => console.log(error));
   };
   useEffect(() => {
-    console.log(token)
     token ? setStatusNav(true) : setStatusNav(false);
     // if (token) {
     // getNotifications();
