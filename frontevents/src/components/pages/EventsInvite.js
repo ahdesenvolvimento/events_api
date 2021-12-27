@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import Event from "../layout/Event";
 import Card from "../layout/Card";
 import Select from "../form/Select";
 import Form from "../form/Form";
@@ -8,9 +7,17 @@ import { useParams } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCoffee, faEdit, faShareSquare, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Link } from "react-router-dom";
+import MyModal from "../layout/MyModal";
 export default function EventsInvite() {
     const [users, setUsers] = useState([]);
     const [convites, setConvites] = useState([]);
+    const [show, setShow] = useState(false);
+    const [message, setMessage] = useState();
+    const handleClose = () => setShow(false);
+    const handleShow = (message) => {
+        setShow(true);
+        setMessage(message)
+    }
     const { id } = useParams();
     useEffect(() => {
         const init = {
@@ -44,7 +51,7 @@ export default function EventsInvite() {
         };
         fetch("http://localhost:8000/events/invite/", init)
             .then((response) => response.json())
-            .then((data) => {alert(data.message)})
+            .then((data) => {handleShow(data.message)})
             .catch((error) => console.log(error));
     }
     const handleChange = (e) => {
@@ -67,6 +74,8 @@ export default function EventsInvite() {
     return (
         <div className="row">
             <Card content={<Form content={content} method="POST" border="none" handleOnSubmit={inviteUsers} />} />
+            <MyModal show={show} handleClose={handleClose} message={message} title={"Sucesso!"}/>
         </div>
+        
     );
 }

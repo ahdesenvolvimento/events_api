@@ -144,12 +144,15 @@ def delete_user(request, pk):
 @api_view(['POST', 'GET'])
 @permission_classes([IsAuthenticated])
 def join_event(request):
-
     if request.method == 'POST':
         if EventUser.objects.filter(id_event=request.data['id']).count() < Event.objects.filter(id=request.data['id']).first().capacity:
             if request.data['status']:
+                if EventUser.objects.filter(id_user=request.user, id_event=request.data['id']).exists():
+                    message = "Você já confirmou presença nesse evento."
+                    return JsonResponse({"message": message}, safe=False)
                 ConviteEvento.objects.filter(
-                    id_event=request.data['id']).update(status=False)
+                    id_event=request.data['id'],
+                    id_user=request.user).update(status=False)
             event_join = EventUser.objects.create(
                 id_user=request.user, id_event=Event.objects.filter(id=request.data['id']).first())
             serializer = EventUserSerializer(event_join)
@@ -169,7 +172,6 @@ def events_invite(request):
             user = User.objects.filter(id=i).first()
             ConviteEvento.objects.create(id_user=user, id_event=event)
 
-        print(ConviteEvento.objects.all())
         return JsonResponse({"message": "Os usuários foram convidados para o seu evento!"}, safe=False)
 
 
