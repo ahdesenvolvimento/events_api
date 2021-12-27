@@ -71,8 +71,9 @@ export default function Event() {
       <h5>Informações sobre o evento:</h5>
       <p>{event.description}</p>
       <p>
-        O evento começará as {event.start_time} com término as{" "}
-        {event.finish_time} do dia X
+        O evento ocorrerá no seguinte endereço <strong>{event.logradouro}, número {event.numero}, bairro {event.bairro} - {event.localidade}/{event.uf} - {event.cep} </strong>no dia {event.date_start} começando as {event.start_time} e terminando as {event.finish_time} do dia {event.date_finish}
+        {/* O evento começará as {event.start_time} com término as{" "}
+        {event.finish_time} do dia {event.date_start}  {event.finish_time && (<p>12312321</p>)} */}
       </p>
       <p>{event.total} participantes</p>
       {!statusEvent && (

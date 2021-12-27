@@ -202,7 +202,7 @@ export default function NewEvent() {
             placeholder="Número"
             handleOnChange={handleChange}
             value={event.numero ? event.numero : ""}
-            // required={true}
+            required={false}
           />
         </div>
         <div className="col-md-12">
