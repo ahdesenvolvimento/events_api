@@ -39,10 +39,10 @@ export default function Event({ data, status }) {
     <>
       {status == 1 ? (
         <>
-          {dados.length == 0 && (
+          {data.length == 0 && (
             <p className={styles.noEvents}>Sem eventos disponíveis</p>
           )}
-          {dados.map((event) => (
+          {data.map((event) => (
             <div className="col-md-4 mt-3" key={event.id}>
               <Card
                 title={event.title}

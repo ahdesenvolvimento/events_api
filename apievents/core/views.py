@@ -14,10 +14,12 @@ from rest_framework.decorators import api_view, permission_classes
 def index(request):
     if request.method == 'GET':
         search = request.GET.get('search')
+        start_time = request.GET.get('start_time')
+        finish_time = request.GET.get('finish_time')
+        print(start_time, finish_time)
         if search:
             serializer = EventSerializer(Event.objects.filter(
                 title__contains=request.GET.get('search'), private=False), many=True)
-
         else:
             serializer = EventSerializer(
                 Event.objects.filter(private=False), many=True)

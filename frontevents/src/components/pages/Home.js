@@ -7,6 +7,7 @@ export default function Home() {
   const [events, setEvents] = useState([]);
   const [search, setSearch] = useState();
   const [busca, setBusca] = useState(false);
+  
   useEffect(() => {
     const init = {
       method: "GET",
@@ -24,7 +25,7 @@ export default function Home() {
   }, []);
 
   const searchEvent = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     const init = {
       method: "GET",
       headers: {
@@ -35,8 +36,9 @@ export default function Home() {
     fetch("http://localhost:8000/?search=" + search, init)
       .then((response) => response.json())
       .then((data) => {
+        console.log(data);
         setEvents(data);
-        search === '' ? setBusca(false) : setBusca(true);
+        search === "" ? setBusca(false) : setBusca(true);
       })
       .catch((error) => console.log(error));
   };
@@ -49,15 +51,25 @@ export default function Home() {
         handleOnChange={(e) => setSearch(e.target.value)}
       />
     </>
-  )
+  );
   return (
     <>
       <div className="row">
-        <Form method="GET" handleOnSubmit={searchEvent} content={content} styles={styles} border="none"/>
+        <Form
+          method="GET"
+          handleOnSubmit={searchEvent}
+          content={content}
+          styles={styles}
+          border="none"
+        />
       </div>
       <div className={styles.content + " row"}>
-        <h4>{busca ? 'Eventos disponíveis relacionados a busca ' + search : "Todos os eventos disponíveis"}</h4>
-        <Event data={events} status="1" busca={busca} />
+        <h4>
+          {busca
+            ? "Eventos disponíveis relacionados a busca " + search
+            : "Todos os eventos disponíveis"}
+        </h4>
+        <Event data={events} status="1" />
       </div>
     </>
   );
