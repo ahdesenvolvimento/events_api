@@ -2,6 +2,7 @@ from django.db import models
 
 from django.contrib.auth.models import BaseUserManager, AbstractUser
 
+
 class BaseManager(BaseUserManager):
     use_in_migrations = True
 
@@ -43,25 +44,39 @@ class User(AbstractUser):
     class Meta:
         db_table = 'usuario'
 
+
 class Base(models.Model):
     created_at = models.DateField(auto_now_add=True)
     time_created = models.TimeField(auto_now=True)
+
     class Meta:
         abstract = True
-        
+
+
 class Event(Base):
     id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=255, null=True, blank=False)
     description = models.TextField()
     start_time = models.TimeField()
     finish_time = models.TimeField()
-    city = models.CharField(max_length=255)
+    # city = models.CharField(max_length=255)
+    date_start = models.DateField(null=True)
+    date_finish = models.DateField(null=True)
     private = models.BooleanField(default=False)
     capacity = models.IntegerField(blank=True, null=True)
-    user_owner = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
+    cep = models.CharField(max_length=20, null=True, blank=False)
+    logradouro = models.CharField(max_length=255, blank=False, null=True)
+    complemento = models.CharField(max_length=255, null=True, blank=True)
+    localidade = models.CharField(max_length=255, blank=False, null=True)
+    bairro = models.CharField(max_length=255, null=True, blank=False)
+    uf = models.CharField(max_length=2, blank=False, null=True)
+    numero = models.CharField(max_length=50, blank=False, null=True)
+    user_owner = models.ForeignKey(
+        User, on_delete=models.CASCADE, blank=True, null=True)
 
     class Meta:
         db_table = 'event'
+
 
 class EventUser(Base):
     id = models.AutoField(primary_key=True)
@@ -70,6 +85,7 @@ class EventUser(Base):
 
     class Meta:
         db_table = 'event_user'
+
 
 class ConviteEvento(Base):
     id = models.AutoField(primary_key=True)

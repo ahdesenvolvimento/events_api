@@ -6,7 +6,8 @@ export default function Input({
   handleOnChange,
   value,
   placeholder,
-  required
+  required,
+  handleOnBlur
 }) {
   return (
     <div className={styles.formGroup}>
@@ -19,6 +20,7 @@ export default function Input({
         placeholder={placeholder}
         value={value}
         required={required}
+        onBlur={handleOnBlur}
       />
     </div>
   );

@@ -37,13 +37,19 @@ def events(request):
                 description=request.data['description'],
                 start_time=request.data['start_time'],
                 finish_time=request.data['finish_time'],
-                city=request.data['city'],
+                localidade=request.data['localidade'],
                 title=request.data['title'],
                 capacity=request.data['capacity'],
+                cep=request.data['cep'],
+                bairro=request.data['bairro'],
+                logradouro=request.data['logradouro'],
+                numero=request.data['numero'],
+                uf=request.data['uf'],
+                complemento=request.data['complemento'],
+                date_start=request.data['date_start'],
+                date_finish=request.data['date_finish'],
                 user_owner=request.user
             )
-            print(Event.objects.filter(user_owner=request.user))
-            print('ops')
         return JsonResponse(serializer.data, safe=False)
     return JsonResponse({"events": "events"}, safe=False)
 
@@ -82,7 +88,7 @@ def events_confirmed(request):
 @api_view(['PUT', 'GET'])
 def edit_event(request, pk):
     if request.method == 'GET':
-        print(request.user)
+        print(Event.objects.filter(id=pk).first().date_start)
         serializer = EventSerializer(Event.objects.filter(id=pk), many=True)
         serializer.data[0]['total'] = EventUser.objects.filter(
             id_event=pk).count()
@@ -160,7 +166,6 @@ def join_event(request):
             return JsonResponse({"message": message}, safe=False)
         else:
             return JsonResponse({"message": "O evento atingiu o número máximo de participantes!"}, safe=False)
-        # print(request.user , Event.objects.filter(id=request.data['id']).first())
 
 
 @api_view(['POST'])

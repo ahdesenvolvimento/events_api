@@ -8,13 +8,29 @@ import styles from "./NewEvent.module.css";
 import MyModal from "../../components/layout/MyModal";
 export default function NewEvent() {
   const [event, setEvent] = useState([]);
+  const [teste, setTeste] = useState([]);
   const { id } = useParams();
-  const [show, setShow] = useState(false)
+  const [show, setShow] = useState(false);
   const [message, setMessage] = useState();
+
+  const pesquisacep = (cep) => {
+    fetch("https://viacep.com.br/ws/" + cep + "/json/")
+      .then((response) => response.json())
+      .then((data) => {
+        delete data.ddd;
+        delete data.gia;
+        delete data.ibge;
+        delete data.siafi;
+        let new_object = { ...event, ...data };
+        setEvent({ ...new_object });
+      })
+      .catch((error) => console.log(error));
+  };
+
   const handleShow = (message) => {
     setMessage(message);
-    setShow(true)
-  }
+    setShow(true);
+  };
   const handleClose = () => setShow(false);
   useEffect(() => {
     if (id) {
@@ -27,12 +43,11 @@ export default function NewEvent() {
       fetch("http://localhost:8000/events/" + id, init)
         .then((response) => response.json())
         .then((data) => {
-          
           setEvent(data[0]);
         })
         .catch((error) => console.log(error));
     } else {
-      setEvent([])
+      setEvent([]);
     }
   }, []);
 
@@ -48,6 +63,7 @@ export default function NewEvent() {
   ];
   const newEvent = (e) => {
     e.preventDefault();
+
     const init = {
       method: "POST",
       headers: {
@@ -59,8 +75,8 @@ export default function NewEvent() {
     fetch("http://localhost:8000/events/", init)
       .then((response) => response.json())
       .then((data) => {
-        handleShow('Evento cadastrado com sucesso!')
-        setEvent([])
+        handleShow("Evento cadastrado com sucesso!");
+        setEvent([]);
       })
       .catch((error) => console.log(error));
   };
@@ -78,7 +94,7 @@ export default function NewEvent() {
     fetch("http://localhost:8000/events/" + id, init)
       .then((response) => response.json())
       .then((data) => {
-        handleShow('Evento editado com sucesso!')
+        handleShow("Evento editado com sucesso!");
       })
       .catch((error) => console.log(error));
   };
@@ -88,10 +104,11 @@ export default function NewEvent() {
 
   const content = (
     <>
-      <h3 className={styles.title}>{id ? "Editar Evento " + event.title : "Cadastrar Evento"}</h3>
+      <h3 className={styles.title}>
+        {id ? "Editar Evento " + event.title : "Cadastrar Evento"}
+      </h3>
       <Input
         type="text"
-        id="title"
         name="title"
         text="Título do evento"
         placeholder="Insira o título do evento"
@@ -101,7 +118,6 @@ export default function NewEvent() {
       />
       <Input
         type="text"
-        id="description"
         name="description"
         text="Descrição do evento"
         placeholder="Insira a descrição do evento"
@@ -111,10 +127,31 @@ export default function NewEvent() {
         required={true}
       />
       <div className="row">
-        <div className="col-6">
+        <div className="col-md-6">
+          <Input
+            type="date"
+            name="date_start"
+            text="Data de início"
+            handleOnChange={handleChange}
+            value={event.date_start ? event.date_start : ""}
+            required={true}
+          />
+        </div>
+        <div className="col-md-6">
+          <Input
+            type="date"
+            name="date_finish"
+            text="Data do término"
+            handleOnChange={handleChange}
+            value={event.date_finish ? event.date_finish : ""}
+            required={false}
+          />
+        </div>
+      </div>
+      <div className="row">
+        <div className="col-md-6">
           <Input
             type="time"
-            id="start_time"
             name="start_time"
             text="Hora de início"
             handleOnChange={handleChange}
@@ -122,10 +159,9 @@ export default function NewEvent() {
             required={true}
           />
         </div>
-        <div className="col-6">
+        <div className="col-md-6">
           <Input
             type="time"
-            id="finish_time"
             name="finish_time"
             text="Hora do término"
             handleOnChange={handleChange}
@@ -134,20 +170,97 @@ export default function NewEvent() {
           />
         </div>
       </div>
-
-      <Input
+      <div className="row">
+        <div className="col-md-3">
+          <Input
+            type="text"
+            name="cep"
+            text="CEP"
+            placeholder="CEP"
+            handleOnChange={handleChange}
+            value={event.cep ? event.cep : ""}
+            handleOnBlur={(e) => pesquisacep(e.target.value)}
+            required={true}
+          />
+        </div>
+        <div className="col-md-7">
+          <Input
+            type="text"
+            name="logradouro"
+            text="Endereço do evento"
+            placeholder="Insira o endereço do evento"
+            handleOnChange={handleChange}
+            value={event.logradouro ? event.logradouro : ""}
+            required={true}
+          />
+        </div>
+        <div className="col-md-2">
+          <Input
+            type="text"
+            name="numero"
+            text="Número"
+            placeholder="Número"
+            handleOnChange={handleChange}
+            value={event.numero ? event.numero : ""}
+            // required={true}
+          />
+        </div>
+        <div className="col-md-12">
+          <Input
+            type="text"
+            name="complemento"
+            text="Complemento"
+            placeholder="Complemento"
+            handleOnChange={handleChange}
+            value={event.complemento ? event.complemento : ""}
+            required={false}
+          />
+        </div>
+        <div className="col-md-5">
+          <Input
+            type="text"
+            name="bairro"
+            text="Bairro"
+            placeholder="Bairro"
+            handleOnChange={handleChange}
+            value={event.bairro ? event.bairro : ""}
+            required={true}
+          />
+        </div>
+        <div className="col-md-5">
+          <Input
+            type="text"
+            name="localidade"
+            text="Cidade"
+            placeholder="Cidade"
+            handleOnChange={handleChange}
+            value={event.localidade ? event.localidade : ""}
+            required={true}
+          />
+        </div>
+        <div className="col-md-2">
+          <Input
+            type="text"
+            name="uf"
+            text="Estado"
+            placeholder="Estado"
+            handleOnChange={handleChange}
+            value={event.uf ? event.uf : ""}
+            required={true}
+          />
+        </div>
+      </div>
+      {/* <Input
         type="text"
-        id="city"
         name="city"
         text="Cidade do evento"
         placeholder="Insira a descrição do evento"
         handleOnChange={handleChange}
         value={event.city ? event.city : ""}
         required={true}
-      />
+      /> */}
 
       <Select
-        id="private"
         name="private"
         text="Evento privado?"
         options={options}
@@ -156,7 +269,6 @@ export default function NewEvent() {
       />
       <Input
         type="number"
-        id="capacity"
         name="capacity"
         text="Capacidade do evento"
         placeholder="Insira a descrição do evento"
