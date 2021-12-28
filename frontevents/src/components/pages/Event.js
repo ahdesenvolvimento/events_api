@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import styles from "./Event.module.css";
 import Card from "../layout/Card";
+import Button from "../layout/Button";
 import MyModal from "../layout/MyModal";
 export default function Event() {
   const { id } = useParams();
@@ -71,13 +72,30 @@ export default function Event() {
       <h5>Informações sobre o evento:</h5>
       <p>{event.description}</p>
       <p>
-        O evento ocorrerá no seguinte endereço <strong>{event.logradouro}, número {event.numero}, bairro {event.bairro} - {event.localidade}/{event.uf} - {event.cep} </strong>no dia {event.date_start} começando as {event.start_time} e terminando as {event.finish_time} do dia {event.date_finish}
+        O evento ocorrerá no seguinte endereço{" "}
+        <strong>
+          {event.logradouro}, número {event.numero}, bairro {event.bairro} -{" "}
+          {event.localidade}/{event.uf} - {event.cep}{" "}
+        </strong>
+        no dia {event.date_start} começando as {event.start_time} e terminando
+        as {event.finish_time} do dia {event.date_finish}
       </p>
       <p>{event.total} participantes</p>
-      {!statusEvent && (
-        <Link to="/" onClick={joinEvent}>
-          Confirmar presença
-        </Link>
+      {localStorage.getItem("access-token") ? (
+        !statusEvent ? (
+          <Link to="/" onClick={joinEvent}>
+            Confirmar presença
+          </Link>
+        ) : (
+          <Button
+            type="button"
+            className="btn btn-secondary"
+            text="Você é o dono desse evento!"
+            disabled={true}
+          />
+        )
+      ) : (
+        <Link to="/login">Você precisa fazer o login</Link>
       )}
     </>
   );

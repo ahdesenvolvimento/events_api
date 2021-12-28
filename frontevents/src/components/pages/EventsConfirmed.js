@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
-import Event from "../layout/Event";
 import Card from "../layout/Card";
 import Button from "../layout/Button";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCoffee, faEdit, faShareSquare, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faShareSquare } from '@fortawesome/free-solid-svg-icons';
 import styles from "./EventsConfirmed.module.css";
 import { Link } from "react-router-dom";
 export default function EventsConfirmed() {

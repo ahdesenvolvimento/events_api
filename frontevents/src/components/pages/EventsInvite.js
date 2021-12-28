@@ -4,9 +4,6 @@ import Select from "../form/Select";
 import Form from "../form/Form";
 import SubmitButton from "../form/SubmitButton";
 import { useParams } from "react-router-dom";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCoffee, faEdit, faShareSquare, faTrash } from '@fortawesome/free-solid-svg-icons';
-import { Link } from "react-router-dom";
 import MyModal from "../layout/MyModal";
 export default function EventsInvite() {
     const [users, setUsers] = useState([]);

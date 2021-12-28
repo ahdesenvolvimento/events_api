@@ -30,7 +30,6 @@ export default function Home() {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        // Authorization: "Bearer " + localStorage.getItem("access-token"),
       },
     };
     fetch("http://localhost:8000/?search=" + search, init)

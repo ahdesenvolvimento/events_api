@@ -106,7 +106,7 @@ export default function Login() {
       </div><div className={styles.row}>
       </div><div className={styles.row}>
         <div className={styles.btnLinks}>
-          <SubmitButton text="Entrar" />
+          <SubmitButton text="Criar usuário" />
         </div>
       </div></>
   )

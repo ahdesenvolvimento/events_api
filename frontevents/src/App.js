@@ -22,12 +22,12 @@ function App() {
         <div className="minHeight container">
           <Routes>
             <Route exact path="/" element={<Home />} />
+            <Route path="/event/:id/" element={<Event />} />
             {token ? (
               <>
                 <Route path="/newevent" element={<NewEvent />} />
                 <Route path="events/" element={<Events />} />
                 <Route path="/events/:id/" element={<NewEvent />} />
-                <Route path="/event/:id/" element={<Event />} />
                 <Route path="events/confirmed/" element={<EventsConfirmed />} />
                 <Route path="events/invite/:id" element={<EventsInvite />} />
                 <Route path="*" element={<Navigate to="/" />} />

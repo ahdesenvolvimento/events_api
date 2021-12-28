@@ -25,21 +25,16 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class EventUserSerializer(serializers.ModelSerializer):
-    # id_user = UserSerializer()
     id_event = EventSerializer()
 
     class Meta:
         model = EventUser
-        # Verificar dps, não mostrar a senha do user no console log e nem no objeto
-        # exclude = ('password', )
         fields = ('id_event', 'id')
 
 
 class PersonalUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        # Verificar dps, não mostrar a senha do user no console log e nem no objeto
-        # exclude = ('password', )
         fields = ('id', 'username', )
 
 

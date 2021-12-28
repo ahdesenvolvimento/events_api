@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom";
 import styles from "./Header.module.css";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Button from "../layout/Button";
 import MyModal from "./MyModal";
 export default function Header({ token }) {
-  let navigate = useNavigate();
+  // let navigate = useNavigate();
   const [notifications, setNotifications] = useState([]);
   const [show, setShow] = useState(false);
   const [message, setMessage] = useState();
@@ -29,32 +29,32 @@ export default function Header({ token }) {
       .then((response) => {
         localStorage.removeItem("access-token");
         localStorage.removeItem("refresh-token");
-        navigate("/");
+        window.location.reload(true)
+        // navigate("/");
       })
       .then((data) => console.log(data))
       .catch((error) => console.log(error));
   };
   useEffect(() => {
-    // if (token) {
+    if (token) {
     // getNotifications();
-    const init = {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + localStorage.getItem("access-token"),
-      },
-    };
-    fetch("http://localhost:8000/notifications/", init)
-      .then((response) => response.json())
-      .then((data) => {
-        setNotifications(data);
-      })
-      .catch((error) => console.log(error));
-    // }
+      const init = {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("access-token"),
+        },
+      };
+      fetch("http://localhost:8000/notifications/", init)
+        .then((response) => response.json())
+        .then((data) => {
+          setNotifications(data);
+        })
+        .catch((error) => console.log(error));
+    }
   }, []);
 
   const joinEvent = (e, id_not) => {
-    console.log(notifications);
     e.preventDefault();
     const init = {
       method: "POST",
@@ -128,6 +128,7 @@ export default function Header({ token }) {
                       )}
                       {notifications.map((notification) => (
                         <a
+                          href="/#"
                           className="dropdown-item"
                           style={{ color: "black", cursor: "pointer" }}
                           key={notification.id}

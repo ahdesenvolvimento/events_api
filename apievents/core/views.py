@@ -14,9 +14,8 @@ from rest_framework.decorators import api_view, permission_classes
 def index(request):
     if request.method == 'GET':
         search = request.GET.get('search')
-        start_time = request.GET.get('start_time')
-        finish_time = request.GET.get('finish_time')
-        print(start_time, finish_time)
+        # start_time = request.GET.get('start_time')
+        # finish_time = request.GET.get('finish_time')
         if search:
             serializer = EventSerializer(Event.objects.filter(
                 title__contains=request.GET.get('search'), private=False), many=True)
@@ -30,8 +29,6 @@ def index(request):
 @api_view(['POST', 'GET'])
 @permission_classes([IsAuthenticated])
 def events(request):
-
-    # if request.user != 'isAnonymous':
     if request.method == 'POST':
         serializer = EventSerializer(data=request.data)
         if serializer.is_valid():
@@ -79,7 +76,6 @@ def events_confirmed(request):
     if request.method == 'GET':
         eventos = EventUser.objects.filter(
             id_user=request.user.id).values('id_event')
-        # print(eventos)
         # serializer = EventPresenceSerializer(Event.objects.filter(id__in=eventos), many=True)
         serializer = EventUserSerializer(EventUser.objects.filter(
             id_user=request.user.id), many=True)
@@ -90,7 +86,6 @@ def events_confirmed(request):
 @api_view(['PUT', 'GET'])
 def edit_event(request, pk):
     if request.method == 'GET':
-        print(Event.objects.filter(id=pk).first().date_start)
         serializer = EventSerializer(Event.objects.filter(id=pk), many=True)
         serializer.data[0]['total'] = EventUser.objects.filter(
             id_event=pk).count()
@@ -135,7 +130,6 @@ def user(request):
 def users_show(request):
     if request.method == 'GET':
         # user_not_event = EventUser.objects.filter().exclude(id_user=request.user)
-        # print("to aqui", User.objects.filter().exclude(id=request.user.id).values(=F("id"), ))
         serializer = PersonalUserSerializer(
             User.objects.filter().exclude(id=request.user.id), many=True)
         return JsonResponse(serializer.data, safe=False)

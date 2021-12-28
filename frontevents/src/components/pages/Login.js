@@ -4,11 +4,11 @@ import SubmitButton from "../form/SubmitButton";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import Form from "../form/Form";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import MyModal from "../layout/MyModal";
 import { faGrinBeamSweat } from '@fortawesome/free-solid-svg-icons'
 export default function Login() {
-  let navigate = useNavigate();
+  // let navigate = useNavigate();
   const [user, setUser] = useState([]);
   const [show, setShow] = useState(false);
   const [message, setMessage] = useState();
@@ -32,7 +32,8 @@ export default function Login() {
         data = data.detail ? (handleShow("Usuário não cadastrado no sistema!")) : (
           localStorage.setItem("access-token", data.access),
           localStorage.setItem("refresh-token", data.refresh),
-          navigate('/')
+          window.location.reload(true)
+          // navigate('/')
         )
       })
       .catch((error) => console.log(error));
