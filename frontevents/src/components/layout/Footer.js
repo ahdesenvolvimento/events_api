@@ -9,10 +9,20 @@ export default function Footer() {
             href="https://github.com/ahdesenvolvimento"
             title="Github Antonio Henrique"
             target="_blank"
+            rel="noreferrer"
           >
             Antonio Henrique
           </a>
-          ADD GIT HUB DO PROJETO
+        </span>
+        <span>
+          <a
+            href="https://github.com/ahdesenvolvimento/events_api"
+            target="_blank"
+            title="Github do projeto"
+            rel="noreferrer"
+          >
+            Github do projeto
+          </a>
         </span>
       </div>
     </footer>
