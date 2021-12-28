@@ -29,7 +29,7 @@ export default function MyEventsAuth({ data, deleteEvent, styles }) {
                                     </td>
                                     <td>{event.start_time}</td>
                                     <td>{event.finish_time}</td>
-                                    <td>{event.city}</td>
+                                    <td>{event.localidade}</td>
                                     <td>{event.capacity}</td>
                                     <td>{event.private ? "Sim" : "Não"}</td>
                                     <td>

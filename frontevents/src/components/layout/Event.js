@@ -46,7 +46,7 @@ export default function Event({ data, status }) {
             <div className="col-md-4 mt-3" key={event.id}>
               <Card
                 title={event.title}
-                styles={styles.minHeight}
+                styles={styles.minHeight + ' ' + styles.cardCustom}
                 footer={
                   <>
                     <Link

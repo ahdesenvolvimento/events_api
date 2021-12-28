@@ -83,19 +83,19 @@ export default function Event() {
       <p>{event.total} participantes</p>
       {localStorage.getItem("access-token") ? (
         !statusEvent ? (
-          <Link to="/" onClick={joinEvent}>
+          <Link to="/" onClick={joinEvent} className="btn btn-secondary">
             Confirmar presença
           </Link>
         ) : (
           <Button
             type="button"
             className="btn btn-secondary"
-            text="Você é o dono desse evento!"
+            text="Confirmar presença"
             disabled={true}
           />
         )
       ) : (
-        <Link to="/login">Você precisa fazer o login</Link>
+        <Link to="/login" className="btn btn-secondary">Você precisa fazer o login</Link>
       )}
     </>
   );

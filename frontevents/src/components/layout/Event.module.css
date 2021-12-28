@@ -15,6 +15,11 @@
     box-shadow: 0 0 .25em black;
 }
 
+.cardCustom:hover{
+    transition: .5s;
+    transform: scale(1.05);
+}
+
 .linkCustom {
     text-decoration: none;
     background-color: #6998AB;
