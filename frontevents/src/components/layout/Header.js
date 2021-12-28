@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom";
 import styles from "./Header.module.css";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Button from "../layout/Button";
 import MyModal from "./MyModal";
-export default function Header({ token }) {
-  // let navigate = useNavigate();
+export default function Header({ token, statusNav, setStatusNav }) {
+  let navigate = useNavigate();
   const [notifications, setNotifications] = useState([]);
   const [show, setShow] = useState(false);
   const [message, setMessage] = useState();
@@ -14,6 +14,7 @@ export default function Header({ token }) {
     setShow(true);
     setMessage(message);
   };
+  console.log(statusNav)
   const logout = (e) => {
     const init = {
       method: "POST",
@@ -29,14 +30,16 @@ export default function Header({ token }) {
       .then((response) => {
         localStorage.removeItem("access-token");
         localStorage.removeItem("refresh-token");
-        window.location.reload(true)
-        // navigate("/");
+        setStatusNav(false);
+        // window.location.reload(true)
+        navigate("/");
       })
       .then((data) => console.log(data))
       .catch((error) => console.log(error));
   };
   useEffect(() => {
     if (token) {
+      setStatusNav(true);
     // getNotifications();
       const init = {
         method: "GET",
@@ -100,7 +103,7 @@ export default function Header({ token }) {
               <li>
                 <Link to="/">Início</Link>
               </li>
-              {token ? (
+              {statusNav ? (
                 <>
                   <li>
                     <Link to="/newevent">Criar Evento</Link>

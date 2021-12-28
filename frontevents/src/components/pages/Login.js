@@ -7,7 +7,7 @@ import Form from "../form/Form";
 // import { useNavigate } from "react-router-dom";
 import MyModal from "../layout/MyModal";
 import { faGrinBeamSweat } from '@fortawesome/free-solid-svg-icons'
-export default function Login() {
+export default function Login({setStatusNav}) {
   // let navigate = useNavigate();
   const [user, setUser] = useState([]);
   const [show, setShow] = useState(false);
@@ -32,7 +32,8 @@ export default function Login() {
         data = data.detail ? (handleShow("Usuário não cadastrado no sistema!")) : (
           localStorage.setItem("access-token", data.access),
           localStorage.setItem("refresh-token", data.refresh),
-          window.location.reload(true)
+          setStatusNav(true)
+          // window.location.reload(true)
           // navigate('/')
         )
       })

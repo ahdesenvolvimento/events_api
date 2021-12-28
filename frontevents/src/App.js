@@ -12,13 +12,15 @@ import EventsInvite from "./components/pages/EventsInvite";
 import "./App.css";
 
 import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
+import { useState } from "react";
 
 function App() {
   const token = localStorage.getItem('access-token');
+  const [statusNav, setStatusNav] = useState(false);
   return (
     <div className="app">
       <Router>
-        <Header token={token} />
+        <Header token={token} statusNav={statusNav} setStatusNav={setStatusNav}/>
         <div className="minHeight container">
           <Routes>
             <Route exact path="/" element={<Home />} />
@@ -34,7 +36,7 @@ function App() {
               </>
             ) : (
               <>
-                <Route path="/login" element={<Login />} />
+                <Route path="/login" element={<Login setStatusNav={setStatusNav}/>} />
                 <Route path="/register" element={<Register />} />
                 <Route path="*" element={<Navigate to="/login" />} />
               </>
