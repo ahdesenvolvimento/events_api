@@ -1,6 +1,7 @@
+import style from "./Card.module.css";
 export default function Card({ content, backgroundColor, border, title, footer, styles }) {
     return (
-        <div className={styles + " card mt-3"} style={{ backgroundColor: backgroundColor, border: border }}>
+        <div className={styles + " card mt-3" + ' '+ style.stylesCard} style={{ backgroundColor: backgroundColor, border: border }}>
             {title && (
                 <>
                     <div className="card-header">
